@@ -45,7 +45,18 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  #begin cấu hình cho việc và gửi link trong mail xác nhận
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }  
+  #begin cấu hình cho việc gửi mail xác nhận
+  ip=Socket.ip_address_list.detect{|intf| intf.ipv4_private?}
+  ip_of_server = ip.ip_address if ip
+  
+  config.action_mailer.default_url_options = { :host => ip_of_server||"127.0.0.1",port: 3000 }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      :address              => "smtp.gmail.com",
+      :port                 => 587,
+      :user_name            => ENV["GMAIL_USERNAME"],
+      :password             => ENV["GMAIL_PASSWORD"],
+      :authentication       => 'plain',
+      :enable_starttls_auto => true  }  
   #end
 end
