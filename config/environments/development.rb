@@ -49,7 +49,7 @@ Rails.application.configure do
   ip=Socket.ip_address_list.detect{|intf| intf.ipv4_private?}
   ip_of_server = ip.ip_address if ip
   
-  config.action_mailer.default_url_options = { :host => ip_of_server||"127.0.0.1",port: 3000 }
+  config.action_mailer.default_url_options = { :host => ip_of_server||"127.0.0.1",port: 1235 }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
       :address              => "smtp.gmail.com",
